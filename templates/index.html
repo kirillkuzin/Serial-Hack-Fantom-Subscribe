@@ -1,0 +1,56 @@
+<html>
+
+    <head>
+    </head>
+
+    <body>
+        <form action="index" method="post">
+            <fieldset>
+                <p><label for="publicKey">Введите Ваш public key: </label><input type="text" name="publicKey"></p>
+                <p><label for="privateKey">Введите Ваш private key: </label><input type="text" name="privateKey"></p>
+                <p><input type="submit"></p>
+            </fieldset>
+        </form>
+        {% if services %}
+            <h1>Сервисы</h1>
+            <form action="subscribe_all" method="post">
+                <input type="hidden" name="publicKey" value="{{publicKey}}">
+                <input type="hidden" name="privateKey" value="{{privateKey}}">
+                <input type="submit" value="Подписаться на все">
+            </form>
+            <form action="unsubscribe_all" method="post">
+                <input type="hidden" name="publicKey" value="{{publicKey}}">
+                <input type="hidden" name="privateKey" value="{{privateKey}}">
+                <input type="submit" value="Отписаться от всего">
+            </form>
+            <table>
+                <tr>
+                    <td>Сервис</td>
+                    <td>Цена</td>
+                    <td>Статус</td>
+                    <td>Адрес</td>
+                </tr>
+                {% for service in services %}
+                    <tr>
+                    <form method="post">
+                        <input type="hidden" name="publicKey" value="{{publicKey}}">
+                        <input type="hidden" name="serviceId" value="{{service.id}}">
+                        <td>{{service.name}}</td>
+                        <td>{{service.value}} FTM</td>
+                        <td>
+                        {% if service.state %}
+                            Активен
+                            <input type="submit" formaction="unsubscribe" value="Отписаться">
+                        {% else %}
+                            <input type="submit" formaction="subscribe" value="Подписаться">
+                        {% endif %}
+                        </td>
+                        <td>{{service.wallet}}</td>
+                    </form>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </body>
+
+</html>
