@@ -29,6 +29,7 @@
                     <td>Цена</td>
                     <td>Статус</td>
                     <td>Адрес</td>
+                    <td>Период</td>
                 </tr>
                 {% for service in services %}
                     <tr>
@@ -46,6 +47,7 @@
                         {% endif %}
                         </td>
                         <td>{{service.wallet}}</td>
+                        <td>{{service.period}} сек</td>
                     </form>
                     </tr>
                 {% endfor %}
